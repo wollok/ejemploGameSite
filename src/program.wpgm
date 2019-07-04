@@ -1,0 +1,15 @@
+import example.*
+import wollok.game.*
+
+program firstWollokGameProgram {
+	var cajaDiscola = true
+	game.addVisualCharacter(wollok)
+	game.addVisual(caja)
+	game.onTick(2000, "mov",{ if (cajaDiscola) caja.movete() })
+	//
+	// capturamos el evento ENTER del teclado
+	keyboard.enter().onPressDo { cajaDiscola = !cajaDiscola }	
+	//
+	game.whenCollideDo(caja, { personaje => personaje.irAlInicio() })
+	game.start()
+}
