@@ -1,15 +1,44 @@
-import example.*
 import wollok.game.*
 
-program firstWollokGameProgram {
-	var cajaDiscola = true
-	game.addVisualCharacter(wollok)
-	game.addVisual(caja)
-	game.onTick(2000, "mov",{ if (cajaDiscola) caja.movete() })
-	//
-	// capturamos el evento ENTER del teclado
-	keyboard.enter().onPressDo { cajaDiscola = !cajaDiscola }	
-	//
-	game.whenCollideDo(caja, { personaje => personaje.irAlInicio() })
-	game.start()
+object wollok {
+	method howAreYou() = "I am Wollokctastic!"
 }
+
+object caja {
+	var property position = game.center()
+	method image() = "caja.png"
+	method subir(){
+		position = position.up(1)
+	}
+	
+	method movete() {
+		//const x = 0.randomUpTo(game.width()).truncate(0)
+		//const y = 0.randomUpTo(game.height()).truncate(0)
+		const x = (0.. game.width()-1).anyOne() 
+		const y = (0.. game.height()-1).anyOne() 
+		position = game.at(x,y) 
+	}
+}
+	
+
+program ejemplo {
+
+	game.addVisualCharacterIn(wollok,game.origin())	//Para que se pueda mover con las flechas
+	game.addVisual(caja)
+//	Apenas el personaje wollok colisione con la caja, el personaje habla y la caja se desplaza
+	game.onTick(2000, "movimiento", { caja.movete() })
+	
+	game.whenCollideDo(wollok, { elemento => 
+		elemento.movete()
+		game.say(wollok,wollok.howAreYou())
+	})
+
+	// capturamos el evento ENTER del teclado
+	keyboard.enter().onPressDo {game.say(wollok,wollok.howAreYou())}	
+	// capturamos el evento de presionar la tecla p del teclado
+	keyboard.p().onPressDo {game.removeTickEvent("movimiento")}	
+	
+	game.start()
+
+}
+
