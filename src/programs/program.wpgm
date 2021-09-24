@@ -1,29 +1,10 @@
 import wollok.game.*
-
-object wollok {
-	method howAreYou() = "I am Wollokctastic!"
-}
-
-object caja {
-	var property position = game.center()
-	method image() = "caja.png"
-	method subir(){
-		position = position.up(1)
-	}
-	
-	method movete() {
-		//const x = 0.randomUpTo(game.width()).truncate(0)
-		//const y = 0.randomUpTo(game.height()).truncate(0)
-		const x = (0.. game.width()-1).anyOne() 
-		const y = (0.. game.height()-1).anyOne() 
-		position = game.at(x,y) 
-	}
-}
-	
+import wollokObject.*
+import caja.*
 
 program ejemplo {
 
-	game.addVisualCharacterIn(wollok,game.origin())	//Para que se pueda mover con las flechas
+	game.addVisualCharacter(wollok)	//Para que se pueda mover con las flechas
 	game.addVisual(caja)
 //	Apenas el personaje wollok colisione con la caja, el personaje habla y la caja se desplaza
 	game.onTick(2000, "movimiento", { caja.movete() })
@@ -37,6 +18,9 @@ program ejemplo {
 	keyboard.enter().onPressDo {game.say(wollok,wollok.howAreYou())}	
 	// capturamos el evento de presionar la tecla p del teclado
 	keyboard.p().onPressDo {game.removeTickEvent("movimiento")}	
+	
+	keyboard.m().onPressDo({ wollok.mostrarAtributos() })
+	keyboard.e().onPressDo({ wollok.esconderAtributos() })
 	
 	game.start()
 
