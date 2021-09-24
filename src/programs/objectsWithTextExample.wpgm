@@ -1,0 +1,15 @@
+import wollok.game.*
+import pepita.*
+
+object invisible {
+	
+	method position() = game.origin()
+}
+
+program ejemplo {
+
+	game.addVisualCharacter(pepita)
+	game.addVisual(invisible)
+	game.onCollideDo(invisible, {elemento => game.say(invisible, "¡Cuidado!")})
+	game.start()
+}

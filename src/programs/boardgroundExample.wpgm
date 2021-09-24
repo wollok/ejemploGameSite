@@ -1,0 +1,8 @@
+import wollok.game.*
+
+program ejemplo {
+  game.width(10)
+  game.height(10)
+  game.boardGround("playa.jpg") // o el nombre con el que lo hayas bajado
+  game.start()
+}

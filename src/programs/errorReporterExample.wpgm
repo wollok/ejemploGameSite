@@ -1,0 +1,14 @@
+import wollok.game.*
+import wollokObject.*
+import caja.*
+
+
+program ejemplo {
+  game.addVisualCharacter(wollok)  
+  game.addVisual(caja)
+  game.whenCollideDo(wollok, { elemento => 
+    const a = 1 / 0 //Se produce un error
+  })
+  game.errorReporter(caja)
+  game.start()
+}
