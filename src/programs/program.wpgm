@@ -22,6 +22,7 @@ program ejemplo {
 	keyboard.m().onPressDo({ wollok.mostrarAtributos() })
 	keyboard.e().onPressDo({ wollok.esconderAtributos() })
 	
+	game.schedule(3000, { game.say(wollok, "¡Hola!") })
 	game.start()
 
 }

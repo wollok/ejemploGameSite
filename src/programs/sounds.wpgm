@@ -1,0 +1,24 @@
+import wollok.game.*
+
+object waterDrop {
+	
+	method play(){
+		game.sound("water-drop-sound.mp3").play()
+	}
+}
+
+
+program soundProgram {
+	
+	const rain = game.sound("light-rain.mp3")
+	rain.shouldLoop(true)
+	keyboard.enter().onPressDo({waterDrop.play()})
+	keyboard.p().onPressDo({rain.pause()})
+	keyboard.r().onPressDo({rain.resume()})
+	keyboard.s().onPressDo({rain.stop()})
+	keyboard.up().onPressDo({rain.volume(1)})
+	keyboard.down().onPressDo({rain.volume(0)})
+	keyboard.m().onPressDo({rain.volume(0.5)})
+	game.schedule(500, {rain.play()})
+	game.start()
+}
